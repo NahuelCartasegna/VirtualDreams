@@ -160,9 +160,23 @@ Un caso es una pregunta, un comentario o un problema de un cliente.
 
 Son plantillas personalizadas que pueden proporcionar una apariencia diferente para el artículo publicado, así como diferentes tipos de información, visibilidad y derechos de edición.
 
+![TP](https://user-images.githubusercontent.com/85856331/123179223-50f2c080-d45f-11eb-8836-aada414ee2ca.png)
+
 Ejercicio 6
 
+A.   Consultar tu ID haciendo un GET con POSTMAN a este WS:
+
+https://vdfactory-234311.firebaseio.com/contacts.json
+
 ![image](https://user-images.githubusercontent.com/85856331/123176109-41707900-d459-11eb-8082-4e21b0a6ac36.png)
+
+B.   Agregar un campo al objeto Contact llamado idvirtualdreams de tipo texto de 255 caracteres. De la siguiente manera:
+
+![image](https://user-images.githubusercontent.com/85856331/123179576-1a697580-d460-11eb-8f01-8bb2170dac6f.png)
+
+C.   Desarrollar un trigger para que cuando un usuario Modifica o Crea un contacto de Salesforce completando el campo generado el punto B con el ID del punto A, se invoque al Web Service con el idvirtualdreams obtenga los datos del nombre y el email de la respuesta y actualice el campo email del contacto. Usar Playground 1.
+
+
 
 Ejercicio 7 
 
