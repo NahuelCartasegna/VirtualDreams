@@ -172,7 +172,7 @@ https://vdfactory-234311.firebaseio.com/contacts.json
 
 B.   Agregar un campo al objeto Contact llamado idvirtualdreams de tipo texto de 255 caracteres. De la siguiente manera:
 
-![image](https://user-images.githubusercontent.com/85856331/123179576-1a697580-d460-11eb-8f01-8bb2170dac6f.png)
+![image](https://user-images.githubusercontent.com/85856331/123180657-0d4d8600-d462-11eb-8359-2190e17d00aa.png)
 
 C.   Desarrollar un trigger para que cuando un usuario Modifica o Crea un contacto de Salesforce completando el campo generado el punto B con el ID del punto A, se invoque al Web Service con el idvirtualdreams obtenga los datos del nombre y el email de la respuesta y actualice el campo email del contacto. Usar Playground 1.
 
