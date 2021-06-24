@@ -117,6 +117,10 @@ https://vdfactory-234311.firebaseio.com/contacts.json
 
 Al haber hecho el GET primeramente obtuve los datos cargados en la base de datos y una vez que realicé el POST con el body pedido en el punto dos, esos cambios se vieron reflejados al hacer el GET en el punto 3
 
+Ejercicio 4
+
+Link de Trailhead: https://trailblazer.me/id/ncartasegna
+
 Ejercicio 5
 
 1.	Lead:
