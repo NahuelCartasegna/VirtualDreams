@@ -179,67 +179,35 @@ C.   Desarrollar un trigger para que cuando un usuario Modifica o Crea un contac
 
 ´´´
 
-	trigger ModifyorCreate on Contact (after insert, after update) 
-	{ 
-
-   	 Http http = new Http();
-   	 HttpRequest request = new HttpRequest();
-    	request.setEndpoint('https://vdfactory-234311.firebaseio.com/contacts.json');
-    	request.setMethod('PUT');
-     	request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+	trigger ModifyorCreate on Contact (after insert, after update) {
             
-       request.setBody('{"firstname":"Nahuel","email":"nahuelcartasegna@gmail.com","-MbBsOGPVvnq4Q_f6rVO"}');
-            
-       HttpResponse response = http.send(request);
-    
-		if (response.getStatusCode() != 201)
-		{
-   		 System.debug('The status code returned was not expected: ' +
-        	response.getStatusCode() + ' ' + response.getStatus());
-		} 
-
-		else {
-
-    			if(Trigger.isInsert){ 
-                  
-       				 List<Contact> cont = new List <Contact>();
+    public static void parseResponse() {
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://vdfactory-234311.firebaseio.com/contacts.json');
+        request.setMethod('GET');
+        HttpResponse response = http.send(request);
         
-        			for(Contact acct : trigger.new){
-
-            				Contact cc = new Contact(Email = acct.Email);
-
-            				cont.add(cc);
-    
-        			}
-    
-        		if(!cont.isEmpty())
-            			insert cont; 
-		}
-    
-  		else{
-    
-    		List<contact> cntsload = new List <Contact>();
-    
-   		 for(Contact acc : trigger.new){
-       		 List<Contact> cnts = new List<Contact>();
+        System.debug(response.getbody());
+        //parseo para poder tener los registros de formas individuales 
+        JSONParser parser = JSON.CreateParser(response.getbody());
         
-        	cnts= [SELECT Email FROM Contact WHERE Email = :acc.Email];
+        
+        //si la respuesta es exitosa.
+        if(response.getStatusCode() == 200){
+                           if(parser.GetText() == '-McQyHnB2MnaytmfPofO'){
+                               List<Contact> contacto = new List<Contact>();
+            for(Contact acct : trigger.new){
+                Contact contac = new Contact(Email = acct.Email);
+                contacto.add(contac);
+            }
+            if(!contacto.isEmpty()){
+            	insert contacto;
+        	}
     
-    		if(cnts.isEmpty()){
-
-    		Contact cc = new Contact(Email = acc.Email);
-
-    		cntsload.add(cc);
-    
-   		}
+             }
+          }
     }
-    
-    	if(!cntsload.isEmpty())
-        	insert cntsload; 
-
-	}    
-	}
-	}
 ´´´
 
 Ejercicio 7 
