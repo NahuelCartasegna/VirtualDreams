@@ -176,55 +176,56 @@ B.   Agregar un campo al objeto Contact llamado idvirtualdreams de tipo texto de
 
 C.   Desarrollar un trigger para que cuando un usuario Modifica o Crea un contacto de Salesforce completando el campo generado el punto B con el ID del punto A, se invoque al Web Service con el idvirtualdreams obtenga los datos del nombre y el email de la respuesta y actualice el campo email del contacto. Usar Playground 1.
 
+
 ´´´
-trigger ModifyorCreate on Contact (after insert, after update) {
-            
-    Http http = new Http();
-    HttpRequest request = new HttpRequest();
-    request.setEndpoint('https://vdfactory-234311.firebaseio.com/contacts.json');
-    request.setMethod('PUT');
-     request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+
+	trigger ModifyorCreate on Contact (after insert, after update) 
+	{ 
+
+   	 Http http = new Http();
+   	 HttpRequest request = new HttpRequest();
+    	request.setEndpoint('https://vdfactory-234311.firebaseio.com/contacts.json');
+    	request.setMethod('PUT');
+     	request.setHeader('Content-Type', 'application/json;charset=UTF-8');
             
        request.setBody('{"firstname":"Nahuel","email":"nahuelcartasegna@gmail.com","-MbBsOGPVvnq4Q_f6rVO"}');
             
        HttpResponse response = http.send(request);
     
-// Si no se pudo obtener
+		if (response.getStatusCode() != 201)
+		{
+   		 System.debug('The status code returned was not expected: ' +
+        	response.getStatusCode() + ' ' + response.getStatus());
+		} 
 
-if (response.getStatusCode() != 201)
-{
-    System.debug('The status code returned was not expected: ' +
-        response.getStatusCode() + ' ' + response.getStatus());
-} 
+		else {
 
-else {
-
-    if(Trigger.isInsert){ 
+    			if(Trigger.isInsert){ 
                   
-        List<Contact> cont = new List <Contact>();
+       				 List<Contact> cont = new List <Contact>();
         
-        for(Contact acct : trigger.new){
+        			for(Contact acct : trigger.new){
 
-            Contact cc = new Contact(Email = acct.Email);
+            				Contact cc = new Contact(Email = acct.Email);
 
-            cont.add(cc);
+            				cont.add(cc);
     
-        }
+        			}
     
-        if(!cont.isEmpty())
-            insert cont; 
-	}
+        		if(!cont.isEmpty())
+            			insert cont; 
+		}
     
-   else{
+  		else{
     
-    List<contact> cntsload = new List <Contact>();
+    		List<contact> cntsload = new List <Contact>();
     
-    for(Contact acc : trigger.new){
-        List<Contact> cnts = new List<Contact>();
+   		 for(Contact acc : trigger.new){
+       		 List<Contact> cnts = new List<Contact>();
         
-        cnts= [SELECT Email FROM Contact WHERE Email = :acc.Email];
+        	cnts= [SELECT Email FROM Contact WHERE Email = :acc.Email];
     
-    	if(cnts.isEmpty()){
+    		if(cnts.isEmpty()){
 
     		Contact cc = new Contact(Email = acc.Email);
 
@@ -233,12 +234,12 @@ else {
    		}
     }
     
-    if(!cntsload.isEmpty())
-        insert cntsload; 
+    	if(!cntsload.isEmpty())
+        	insert cntsload; 
 
 	}    
-}
-}
+	}
+	}
 ´´´
 
 Ejercicio 7 
